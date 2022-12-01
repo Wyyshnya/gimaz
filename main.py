@@ -84,5 +84,5 @@ def img_to_str(model: any, image_file: str):
 
 
 model = keras.models.load_model('emnist_letters.h5')
-s_out = img_to_str(model, "handwritten_digits.jpg")
+s_out = img_to_str(model, "E:\\Education\\AI\\4.jpg")
 print(s_out)

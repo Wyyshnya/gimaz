@@ -11,6 +11,13 @@ import numpy as np
 
 
 def emnist_model():
+    optimizer = tf.keras.optimizers.RMSprop(
+    learning_rate=0.001,
+    rho=0.9,
+    momentum=0.0,
+    epsilon=1e-07,
+    centered=False,
+    name='RMSprop')
     model = Sequential()
     model.add(Convolution2D(filters=32, kernel_size=(3, 3), padding='valid', input_shape=(28, 28, 1), activation='relu'))
     model.add(Convolution2D(filters=64, kernel_size=(3, 3), activation='relu'))
@@ -20,7 +27,7 @@ def emnist_model():
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.5))
     model.add(Dense(len(emnist_labels), activation='softmax'))
-    model.compile(loss='categorical_crossentropy', optimizer='adadelta', metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
     return model
 
 
@@ -38,7 +45,7 @@ X_test = np.reshape(X_test, (X_test.shape[0], 28, 28, 1))
 
 print(X_train.shape, y_train.shape, X_test.shape, y_test.shape, len(emnist_labels))
 
-k = 5
+k = 2
 X_train = X_train[:X_train.shape[0] // k]
 y_train = y_train[:y_train.shape[0] // k]
 X_test = X_test[:X_test.shape[0] // k]
